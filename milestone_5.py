@@ -18,18 +18,23 @@ class Hangman:
 
     #check whether guess is in word
     def check_guess(self,guess):
-        guess = guess.lower()
-        print(self.word)
+        guess = guess.lower()        
         if guess in self.word:
             print(f"Good guess! {guess} is in the word.")
             #if guess in word, change _ to letter, and reduce list no of unique letter letters yet to be guessed
             for letter in self.word:
-                if letter == guess:
+                if guess== letter:
+                    count= self.word.count(guess)
+                    #add correctly guessed letter to word list one or more times
                     guess_word_pos = self.word.index(letter)
-                    self.word_guessed[guess_word_pos] = guess
+                    self.word_guessed[guess_word_pos] = guess                    
+                    for i in range(count-1):
+                        guess_word_pos = self.word.index(letter, guess_word_pos+1)
+                        self.word_guessed[guess_word_pos] = guess
+
             self.unique_letters_in_word.remove(guess)
             self.num_letters= len(self.unique_letters_in_word)
-            print( self.unique_letters_in_word)            
+            print(self.word_guessed)            
         #if guess not in word, reduce lives left and tell player        
         else:
             self.num_lives-=1
@@ -48,14 +53,33 @@ class Hangman:
                 self.check_guess(guess)
                 self.list_of_guesses.append(guess)
                 break
+    #win or lose, play again?
+    def play_again(self):
+         while True:
+                 replay = input("Play again? Y/N ").upper()      
+                 if replay == "Y":
+                     play_game (self.word_list)
+                 elif replay == "N":
+                     exit()
+                 else:
+                     print("Invalid answer, replay? ")
+                
+
+def play_game(word_list):
+    game = Hangman(word_list, num_lives=5)
+
+    while True:
+        if game.num_lives >0 and game.num_letters ==0:
+            print("Congratulations. You won the game!")
+            game.play_again()
+           
+        elif game.num_lives >0:
+            game.ask_for_input()
+        elif game.num_lives == 0:
+            print("Sorry, you have lost! ")
+            game.play_again()
+                
+
+game_fruit_list = ["apple", "mango", "grape", "avocado", "blueberry"]         
     
-
-
-    
-
-word_list_fruit = ["apple", "mango", "grape", "avocado", "blueberry"]
-game_1 = Hangman(word_list_fruit)
-print(game_1.num_letters)
-game_1.ask_for_input()
-print(game_1.word_guessed)
-print(game_1.num_letters)
+play_game (game_fruit_list)
