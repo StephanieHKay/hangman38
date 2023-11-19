@@ -1,17 +1,15 @@
 import random
 
-word_list = ["apple", "mango", "grape", "avocado", "blueberry"]
+fruit_word_list = ["apple", "mango", "grape", "avocado", "blueberry"]
 
-# for fruit in word_list:
-#     print(fruit)
 
-word = random.choice(word_list)
-#print(word)
+random_word = random.choice(fruit_word_list)
 
-guess = input("Enter a single letter: ")
-if len(guess) == 1 and guess.isalpha():
-    print("Good guess")
-else:
-    print("Opps! That is not a valid input")
+
+# player_guess = input("Enter a single letter: ")
+# if len(player_guess) == 1 and player_guess.isalpha():
+#     print("Good guess")
+# else:
+#     print("Opps! That is not a valid input")
 
 
